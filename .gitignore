@@ -1,0 +1,12 @@
+# Ignore node modules brought in during build
+node_modules
+packages/*/dist
+packages/*/node_modules
+plugins/*/dist
+plugins/*/node_modules
+
+# Ignore mac DS_Store files
+.DS_Store
+
+# Yarn
+.yarn-error.log
