@@ -3,11 +3,10 @@ import { Config } from '@backstage/config';
 
 
 
+
 export function createGetDogImageAction(options: { config: Config }) {
     const { config } = options;
-    return createTemplateAction<{
-      dogBreed: string;
-    }>({
+    return createTemplateAction<{}>({
       id: 'http:getdog',
       schema: {
         input: {
@@ -34,7 +33,7 @@ export function createGetDogImageAction(options: { config: Config }) {
       async handler(ctx) {
         const error_msg = new Error('Fetching URL failed')
         const unknown_err = new Error('Unknown Error Occured')
-        const { dogBreed } = ctx.input;
+        const dogBreed = userInput.dogBreed? userInput.dogBreed.toLowerCase() : userInput.dogBreed;
         try {
           const dog_img_json = await fetch('https://dog.ceo/api/breed/' + dogBreed + '/images/random', {
             method: 'GET',
@@ -47,7 +46,8 @@ export function createGetDogImageAction(options: { config: Config }) {
           }
       
           const result = (await dog_img_json.json());
-          ctx.output = ('imageString', result.message);
+          const imageString = 'imageString';
+          ctx.output = (imageString, result.message);
         } finally{
         }
     },
